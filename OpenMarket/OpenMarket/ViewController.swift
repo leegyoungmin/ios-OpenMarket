@@ -7,14 +7,18 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let netWorkHandler = NetworkManager()
-    
+    let netWorkHandler = NetworkService()
+
+    var data: ProductListResponse?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        netWorkHandler.requestHealthChecker()
-        netWorkHandler.requestProductListSearching()
-        netWorkHandler.requestDetailProductListSearching(32)
+        let type: apiType = .productList(pageNumber: pageNumber, rowCount: rowCount)
+        
+        netWorkHandler.fetch(endpoint: type, model: ProductListResponse.self) { decodeData in
+            self.data = decodeData
+            print(self.data)
+        }
     }
 }
-

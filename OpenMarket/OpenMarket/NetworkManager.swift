@@ -6,80 +6,82 @@
 
 import Foundation
 
-class NetworkManager {
-    let baseURL: String = "https://openmarket.yagom-academy.kr"
+enum apiType {
+    static let baseURL: String = "https://openmarket.yagom-academy.kr"
+    case healthChecker
+    case productList(pageNumber: Int, rowCount: Int)
+    case searchProduct(id: Int)
     
-    func requestHealthChecker() {
-        // URL 생성
-        guard let url = URL(string: baseURL + "/healthChecker") else {
-            return
+    var path: String {
+        switch self {
+        case .healthChecker:
+            return "/healthChecker"
+        case .productList:
+            return "/api/products"
+        case .searchProduct(let id):
+            return "/api/products/\(id)"
         }
-        
-        // urlsession 생성
-        let session = URLSession(configuration: .default)
-        
-        // urlrequest 생성
-        let urlRequest = URLRequest(url: url)
-        
-        // urlsession task를 만들어 준다.
-        let task = session.dataTask(with: urlRequest) { data, response, error in
-            // 1. request 에러 체크
-            guard error == nil else {
-                return
-            }
-            
-            // 2. response 에러 체크
-            guard let response = response as? HTTPURLResponse,
-                  response.statusCode == 200 else {
-                return
-            }
-            
-            // 3. decode Data
-            guard let data = data,
-                  let decodeData = String(data: data, encoding: .utf8) else { // 1011011100
-                return
-            }
-            print(decodeData)
-        }
-        
-        // task를 실행해준다.
-        task.resume()
     }
     
-    func requestProductListSearching() {
-        //URL 생성
-        guard let url = URL(string: baseURL + "/api/products?page_no=1&items_per_page=100" ) else {
+    var queryItems: [URLQueryItem] {
+        switch self {
+        case .productList(let pageNumber, let rowCount):
+            return [
+                URLQueryItem(name: "page_no", value: "\(pageNumber)"),
+                URLQueryItem(name: "items_per_page", value: "\(rowCount)")
+            ]
+        default:
+            return []
+        }
+    }
+
+    func generateURL() -> URL? {
+        guard var components = URLComponents(string: Self.baseURL) else {
+            return nil
+        }
+        
+        components.path = path
+        components.queryItems = queryItems
+        
+        return components.url
+    }
+}
+
+protocol Networkable {
+    var session: URLSession { get }
+    func fetch<Model: Decodable>(
+        endpoint: apiType,
+        model: Model.Type,
+        completion: @escaping (Model) -> Void
+    )
+}
+
+extension Networkable {
+    func fetch<Model: Decodable>(
+        endpoint: apiType,
+        model: Model.Type,
+        completion: @escaping (Model) -> Void
+    ) {
+        guard let url = endpoint.generateURL() else {
             return
         }
         
-        //URLSession 생성
-        let urlSession = URLSession(configuration: .default)
+        let request = URLRequest(url: url)
         
-        //URLRequest 생성
-        let urlRequest = URLRequest(url: url)
-        
-        //URLSessionTask 생성
-        let task = urlSession.dataTask(with: urlRequest) { data, response, error in
-            //1. request 에러 처리
+        let task = session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 return
             }
             
-            //2. respone 에러 처리
             guard let response = response as? HTTPURLResponse,
-                  response.statusCode == 200 else {
+                  response.statusCode == 200,
+                  let data = data else {
                 return
             }
-            
-            //3. data 받아오기
-            guard let data = data else {
-                return
-            }
-            let decoder = JSONDecoder()
             
             do {
-                let fetchData = try decoder.decode(ProductListResponse.self , from: data)
-                print(fetchData)
+                let decodeData = try JSONDecoder().decode(Model.self, from: data)
+                completion(decodeData)
             } catch {
                 print(error)
             }
@@ -87,46 +89,8 @@ class NetworkManager {
         
         task.resume()
     }
-    
-    func requestDetailProductListSearching(_ id: Int) {
-        //URL 생성
-        guard let url = URL(string: baseURL + "/api/products" + "/\(id)") else {
-            return
-        }
-        
-        //URLSession 생성
-        let urlSession = URLSession(configuration: .default)
-        
-        //URLRequest 생성
-        let urlRequest = URLRequest(url: url)
-        
-        //URLSessionTask 생성
-        let task = urlSession.dataTask(with: urlRequest) { data, response, error in
-            //1. request 에러 처리
-            guard error == nil else {
-                return
-            }
-            
-            //2. respone 에러 처리
-            guard let response = response as? HTTPURLResponse,
-                  response.statusCode == 200 else {
-                return
-            }
-            
-            //3. data 받아오기
-            guard let data = data else {
-                return
-            }
-            let decoder = JSONDecoder()
-            
-            do {
-                let fetchData = try decoder.decode(Product.self , from: data)
-                print(fetchData)
-            } catch {
-                print(error)
-            }
-        }
-        
-        task.resume()
-    }
+}
+
+struct NetworkService: Networkable {
+    var session: URLSession = URLSession(configuration: .default)
 }
