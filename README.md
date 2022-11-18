@@ -180,4 +180,4 @@ struct NetworkManager<T: Decodable> {
     - [Test Double](https://yagom.net/courses/unit-test-작성하기/lessons/테스트를-위한-객체-만들기/topic/test-double/)
     - [URLSession](https://developer.apple.com/documentation/foundation/urlsession)
 ---
-[🔝 맨 위로 이동하기](#오픈 마켓)
+[🔝 맨 위로 이동하기](#오픈마켓)
