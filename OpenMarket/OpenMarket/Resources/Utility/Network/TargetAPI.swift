@@ -26,7 +26,6 @@ extension TargetAPI {
         components?.path = path
         components?.queryItems = query.queryItems
         
-        print(components?.url)
         return components?.url
     }
     func generateRequest() -> URLRequest? {
