@@ -47,10 +47,25 @@ private extension MainViewController {
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: - 새로운 ViewController로 변경하기
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 1)
-        navigationController?.pushViewController(viewController, animated: true)
         
+        var controller: UIViewController?
+        let selectedAPI = apiList[indexPath.row]
+        
+        switch selectedAPI {
+        case .OpenMarket:
+            controller = OpenMarketViewController()
+        }
+        
+        guard let controller = controller else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        
+        let navController = UINavigationController(rootViewController: controller)
+        
+        navController.modalPresentationStyle = .currentContext
+
+        present(navController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
