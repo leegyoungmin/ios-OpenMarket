@@ -101,17 +101,31 @@ extension OpenMarketViewController {
             
             switch sectionKind {
             case .grid:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(0.5),
+                    heightDimension: .fractionalHeight(1)
+                )
                 
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.3))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(0.3)
+                )
+                let group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: groupSize,
+                    subitems: [item]
+                )
+                
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .none
             case .list:
                 let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
-                section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layout)
+                section = NSCollectionLayoutSection.list(
+                    using: configuration,
+                    layoutEnvironment: layout
+                )
             }
             return section
         }
@@ -122,7 +136,8 @@ extension OpenMarketViewController {
     func configureDataSource() {
         guard let collectionView = collectionView else { return }
         
-        let gridCellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Int> { (cell, indexPath, itemIdentifier) in
+        let gridCellRegistration = UICollectionView
+            .CellRegistration<UICollectionViewCell, Int> { (cell, indexPath, itemIdentifier) in
             var content = UIListContentConfiguration.cell()
             content.image = UIImage(systemName: "person")
             content.textProperties.alignment = .center
