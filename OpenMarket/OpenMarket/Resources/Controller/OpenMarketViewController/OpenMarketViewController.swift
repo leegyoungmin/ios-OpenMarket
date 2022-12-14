@@ -154,18 +154,17 @@ private extension OpenMarketViewController {
     func configureDataSource() {
         guard let collectionView = collectionView else { return }
         
-        let listCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Product> { (cell, indexPath, itemIdentifier) in
-            var content = cell.defaultContentConfiguration()
-            content.image = UIImage(systemName: "person")
+        let listCellRegistration = UICollectionView
+            .CellRegistration<UICollectionViewCell, Product> { (cell, indexPath, itemIdentifier) in
+            var content = UIListContentConfiguration.cell()
             content.text = itemIdentifier.name
             cell.contentConfiguration = content
         }
         
-        let gridCellRegistration = UICollectionView
-            .CellRegistration<UICollectionViewCell, Product> { (cell, indexPath, itemIdentifier) in
-            var content = UIListContentConfiguration.cell()
+        let gridCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Product> { (cell, indexPath, itemIdentifier) in
+            var content = cell.defaultContentConfiguration()
             content.image = UIImage(systemName: "person")
-            content.textProperties.alignment = .center
+            content.text = itemIdentifier.name
             cell.contentConfiguration = content
         }
         
