@@ -6,7 +6,11 @@
 
 import Foundation
 
-enum OpenMarketAPI: TargetAPI {
+enum OpenMarketAPI: TargetAPI, Hashable {
+    var description: String {
+        return "오픈 마켓"
+    }
+    
     case searchList(_ pageNumber: Int, _ rowCount: Int)
     case searchItem(_ itemNumber: Int)
     case addItem

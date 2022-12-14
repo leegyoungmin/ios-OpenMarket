@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1852D1B42949B5CE0077645B /* OpenMarketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852D1B32949B5CE0077645B /* OpenMarketViewController.swift */; };
 		18AD4E992947309900A2AFDD /* Dictionary+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD4E982947309900A2AFDD /* Dictionary+.swift */; };
 		18AD4E9C294730CA00A2AFDD /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD4E9B294730CA00A2AFDD /* HTTPMethod.swift */; };
 		18AD4E9E294730DE00A2AFDD /* TargetAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD4E9D294730DE00A2AFDD /* TargetAPI.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1852D1B32949B5CE0077645B /* OpenMarketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketViewController.swift; sourceTree = "<group>"; };
 		18AD4E982947309900A2AFDD /* Dictionary+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+.swift"; sourceTree = "<group>"; };
 		18AD4E9B294730CA00A2AFDD /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		18AD4E9D294730DE00A2AFDD /* TargetAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetAPI.swift; sourceTree = "<group>"; };
@@ -45,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1852D1B22949B5B40077645B /* OpenMarketViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1852D1B32949B5CE0077645B /* OpenMarketViewController.swift */,
+			);
+			path = OpenMarketViewController;
+			sourceTree = "<group>";
+		};
 		18AD4E8F29472B2700A2AFDD /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				C70FB0FE25BEF61C00C9924E /* MainViewController.swift */,
+				1852D1B22949B5B40077645B /* OpenMarketViewController */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -224,6 +235,7 @@
 				18AD4E9E294730DE00A2AFDD /* TargetAPI.swift in Sources */,
 				18AD4EA3294734AA00A2AFDD /* ListTableCell.swift in Sources */,
 				18AD4E992947309900A2AFDD /* Dictionary+.swift in Sources */,
+				1852D1B42949B5CE0077645B /* OpenMarketViewController.swift in Sources */,
 				18AD4E9C294730CA00A2AFDD /* HTTPMethod.swift in Sources */,
 				C70FB0FB25BEF61C00C9924E /* AppDelegate.swift in Sources */,
 				18AD4EA12947311100A2AFDD /* OpenMarketAPI.swift in Sources */,

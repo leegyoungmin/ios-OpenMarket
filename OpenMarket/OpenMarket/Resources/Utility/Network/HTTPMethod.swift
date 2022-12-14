@@ -6,7 +6,7 @@
 
 import Foundation
 
-enum HTTPMethod: String {
+enum HTTPMethod: String, Hashable {
     case Get
     case Post
     case Fetch

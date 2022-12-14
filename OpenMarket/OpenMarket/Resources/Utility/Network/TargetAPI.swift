@@ -6,6 +6,10 @@
 
 import Foundation
 
+protocol APIStore {
+    var name: String { get }
+}
+
 protocol TargetAPI {
     var baseURL: String { get }
     var method: HTTPMethod { get }
@@ -27,4 +31,12 @@ extension TargetAPI {
         
         return components.url
     }
+}
+
+enum AnyTargetAPI: String, APIStore, CaseIterable {
+    var name: String {
+        return self.rawValue
+    }
+    
+    case OpenMarket = "오픈 마켓"
 }

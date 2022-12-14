@@ -7,8 +7,10 @@
 import UIKit
 
 class MainViewController: UIViewController {
-    var dataSource: UITableViewDiffableDataSource<Int, UUID>?
+    var dataSource: UITableViewDiffableDataSource<Int, AnyTargetAPI>?
     let APITableView = UITableView()
+    
+    var apiList: [AnyTargetAPI] = AnyTargetAPI.allCases
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,19 +27,19 @@ private extension MainViewController {
     func setUpTableViewDataSource() {
         APITableView.register(ListTableCell.self, forCellReuseIdentifier: ListTableCell.identifier)
         
-        dataSource = UITableViewDiffableDataSource<Int, UUID>(tableView: APITableView) { tableView, indexPath, itemIdentifier in
+        dataSource = UITableViewDiffableDataSource<Int, AnyTargetAPI>(tableView: APITableView) { tableView, indexPath, itemIdentifier in
             let cell = tableView.dequeueReusableCell(withIdentifier: ListTableCell.identifier, for: indexPath) as? ListTableCell
-            cell?.updateIndex(index: indexPath)
+            cell?.updateTarget(targetAPI: self.apiList[indexPath.row])
             return cell
         }
         
         APITableView.dataSource = dataSource
         APITableView.delegate = self
         
-        var snapshot = NSDiffableDataSourceSnapshot<Int, UUID>()
+        var snapshot = NSDiffableDataSourceSnapshot<Int, AnyTargetAPI>()
         
         snapshot.appendSections([0])
-        snapshot.appendItems([UUID(), UUID(), UUID()])
+        snapshot.appendItems(apiList)
         dataSource?.apply(snapshot)
     }
 }

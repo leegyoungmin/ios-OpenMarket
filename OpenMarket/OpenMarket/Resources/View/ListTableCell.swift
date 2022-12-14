@@ -9,7 +9,7 @@ import UIKit
 class ListTableCell: UITableViewCell {
     static let identifier = String(describing: ListTableCell.self)
 
-    private var indexPath: IndexPath?
+    private var targetAPI: APIStore?
     
     override func updateConfiguration(using state: UICellConfigurationState) {
         super.updateConfiguration(using: state)
@@ -17,13 +17,13 @@ class ListTableCell: UITableViewCell {
         var contentConfig = defaultContentConfiguration().updated(for: state)
         let backgroundConfig = UIBackgroundConfiguration.listGroupedCell()
         
-        contentConfig.text = indexPath?.description
+        contentConfig.text = self.targetAPI?.name
         
         contentConfiguration = contentConfig
         backgroundConfiguration = backgroundConfig
     }
     
-    func updateIndex(index: IndexPath) {
-        indexPath = index
+    func updateTarget(targetAPI: APIStore) {
+        self.targetAPI = targetAPI
     }
 }
