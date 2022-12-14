@@ -11,6 +11,7 @@
 		18AD4E9C294730CA00A2AFDD /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD4E9B294730CA00A2AFDD /* HTTPMethod.swift */; };
 		18AD4E9E294730DE00A2AFDD /* TargetAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD4E9D294730DE00A2AFDD /* TargetAPI.swift */; };
 		18AD4EA12947311100A2AFDD /* OpenMarketAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD4EA02947311100A2AFDD /* OpenMarketAPI.swift */; };
+		18AD4EA3294734AA00A2AFDD /* APIListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD4EA2294734AA00A2AFDD /* APIListCell.swift */; };
 		C70FB0FB25BEF61C00C9924E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70FB0FA25BEF61C00C9924E /* AppDelegate.swift */; };
 		C70FB0FD25BEF61C00C9924E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70FB0FC25BEF61C00C9924E /* SceneDelegate.swift */; };
 		C70FB0FF25BEF61C00C9924E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70FB0FE25BEF61C00C9924E /* MainViewController.swift */; };
@@ -23,6 +24,7 @@
 		18AD4E9B294730CA00A2AFDD /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		18AD4E9D294730DE00A2AFDD /* TargetAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetAPI.swift; sourceTree = "<group>"; };
 		18AD4EA02947311100A2AFDD /* OpenMarketAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketAPI.swift; sourceTree = "<group>"; };
+		18AD4EA2294734AA00A2AFDD /* APIListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIListCell.swift; sourceTree = "<group>"; };
 		C70FB0F725BEF61C00C9924E /* OpenMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70FB0FA25BEF61C00C9924E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C70FB0FC25BEF61C00C9924E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 		18AD4E9129472BD300A2AFDD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				18AD4EA2294734AA00A2AFDD /* APIListCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 			files = (
 				C70FB0FF25BEF61C00C9924E /* MainViewController.swift in Sources */,
 				18AD4E9E294730DE00A2AFDD /* TargetAPI.swift in Sources */,
+				18AD4EA3294734AA00A2AFDD /* APIListCell.swift in Sources */,
 				18AD4E992947309900A2AFDD /* Dictionary+.swift in Sources */,
 				18AD4E9C294730CA00A2AFDD /* HTTPMethod.swift in Sources */,
 				C70FB0FB25BEF61C00C9924E /* AppDelegate.swift in Sources */,
@@ -293,7 +297,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = OpenMarket/Sources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -349,7 +353,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = OpenMarket/Sources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -367,7 +371,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BH7V49ZZ2G;
 				INFOPLIST_FILE = OpenMarket/Sources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -387,7 +391,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BH7V49ZZ2G;
 				INFOPLIST_FILE = OpenMarket/Sources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
