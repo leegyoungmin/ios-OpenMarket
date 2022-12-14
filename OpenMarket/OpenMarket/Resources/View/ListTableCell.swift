@@ -6,8 +6,8 @@
 
 import UIKit
 
-class APIListCell: UITableViewCell {
-    static let identifier = String(describing: APIListCell.self)
+class ListTableCell: UITableViewCell {
+    static let identifier = String(describing: ListTableCell.self)
 
     private var indexPath: IndexPath?
     

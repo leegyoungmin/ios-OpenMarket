@@ -8,7 +8,6 @@ import UIKit
 
 class MainViewController: UIViewController {
     var dataSource: UITableViewDiffableDataSource<Int, UUID>?
-    
     let APITableView = UITableView()
     
     override func viewDidLoad() {
@@ -18,17 +17,16 @@ class MainViewController: UIViewController {
         setUpNavigationBar()
         setUpTableViewDataSource()
         setUpConstraints()
-        
     }
 }
 
 // MARK: - TableViewDataSource
 private extension MainViewController {
     func setUpTableViewDataSource() {
-        APITableView.register(APIListCell.self, forCellReuseIdentifier: APIListCell.identifier)
+        APITableView.register(ListTableCell.self, forCellReuseIdentifier: ListTableCell.identifier)
         
         dataSource = UITableViewDiffableDataSource<Int, UUID>(tableView: APITableView) { tableView, indexPath, itemIdentifier in
-            let cell = tableView.dequeueReusableCell(withIdentifier: APIListCell.identifier, for: indexPath) as? APIListCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ListTableCell.identifier, for: indexPath) as? ListTableCell
             cell?.updateIndex(index: indexPath)
             return cell
         }
