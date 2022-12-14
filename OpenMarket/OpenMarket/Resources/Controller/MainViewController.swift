@@ -15,6 +15,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
+        setUpNavigationBar()
         setUpTableViewDataSource()
         setUpConstraints()
         
@@ -33,6 +34,8 @@ private extension MainViewController {
         }
         
         APITableView.dataSource = dataSource
+        APITableView.delegate = self
+        
         var snapshot = NSDiffableDataSourceSnapshot<Int, UUID>()
         
         snapshot.appendSections([0])
@@ -41,8 +44,25 @@ private extension MainViewController {
     }
 }
 
+extension MainViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: - 새로운 ViewController로 변경하기
+        let viewController = UIViewController()
+        viewController.view.backgroundColor = UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 1)
+        navigationController?.pushViewController(viewController, animated: true)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
 // MARK: - UI Configure
 private extension MainViewController {
+    
+    func setUpNavigationBar() {
+        self.navigationItem.title = "API 리스트 보기"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
     func setUpConstraints() {
         view.addSubview(APITableView)
         APITableView.translatesAutoresizingMaskIntoConstraints = false

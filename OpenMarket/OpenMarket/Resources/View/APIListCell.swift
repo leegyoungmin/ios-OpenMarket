@@ -18,7 +18,6 @@ class APIListCell: UITableViewCell {
         let backgroundConfig = UIBackgroundConfiguration.listGroupedCell()
         
         contentConfig.text = indexPath?.description
-        contentConfig.image = UIImage(systemName: "person")
         
         contentConfiguration = contentConfig
         backgroundConfiguration = backgroundConfig
