@@ -40,6 +40,16 @@ class OpenMarketViewController: UIViewController {
         
         setUpConstraints()
         view.backgroundColor = .systemBackground
+        
+        let endPoint = OpenMarketAPI.searchList(1, 100)
+        NetworkManager().fetchData(endPoint: endPoint, model: String.self) { result in
+            switch result {
+            case .success(let value):
+                print(value)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 

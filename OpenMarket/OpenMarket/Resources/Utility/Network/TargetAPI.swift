@@ -17,19 +17,25 @@ protocol TargetAPI {
     var query: [String: String] { get }
     var header: [String: String] { get }
     
-    func generateURL() -> URL?
+    func generateRequest() -> URLRequest?
 }
 
 extension TargetAPI {
-    func generateURL() -> URL? {
-        guard var components = URLComponents(string: baseURL) else {
-            return nil
-        }
+    private func generateURL() -> URL? {
+        var components = URLComponents(string: baseURL)
+        components?.path = path
+        components?.queryItems = query.queryItems
         
-        components.path = path
-        components.queryItems = query.queryItems
+        print(components?.url)
+        return components?.url
+    }
+    func generateRequest() -> URLRequest? {
+        guard let url = generateURL() else { return nil }
         
-        return components.url
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        
+        return request
     }
 }
 
