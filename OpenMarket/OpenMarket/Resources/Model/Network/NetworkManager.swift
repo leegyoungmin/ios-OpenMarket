@@ -15,7 +15,7 @@ struct NetworkManager {
     func fetchData<T: Decodable>(
         endPoint: TargetAPI,
         model: T.Type,
-        completion: @escaping (Result<String, NetworkError>) -> Void
+        completion: @escaping (Result<T, NetworkError>) -> Void
     ) {
         guard let request = endPoint.generateRequest() else { return }
         
@@ -31,19 +31,12 @@ struct NetworkManager {
             }
             
             guard let data = data,
-                  let decodeString = try? String(data: data, encoding: .utf8) else {
+                  let decodeData = try? JSONDecoder().decode(model, from: data) else {
                 completion(.failure(.canNotDecodeData))
                 return
             }
             
-            // TODO: - Json Decoding Type 생성후 JsonDecoder 적용하기
-//            guard let data = data,
-//                  let decodeData = try? JSONDecoder().decode(model, from: data) else {
-//                completion(.failure(.canNotDecodeData))
-//                return
-//            }
-            
-            completion(.success(decodeString))
+            completion(.success(decodeData))
         }
         
         task.resume()

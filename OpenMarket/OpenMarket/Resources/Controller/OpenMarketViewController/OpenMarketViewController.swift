@@ -42,7 +42,7 @@ class OpenMarketViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         let endPoint = OpenMarketAPI.searchList(1, 100)
-        NetworkManager().fetchData(endPoint: endPoint, model: String.self) { result in
+        NetworkManager().fetchData(endPoint: endPoint, model: ProductList.self) { result in
             switch result {
             case .success(let value):
                 print(value)
