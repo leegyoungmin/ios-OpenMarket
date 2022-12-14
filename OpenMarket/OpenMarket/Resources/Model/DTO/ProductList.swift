@@ -23,7 +23,7 @@ struct ProductList: Codable {
     }
 }
 
-struct Product: Codable {
+struct Product: Codable, Hashable {
     let id: Int
     let vendorId: Int
     let vendorName: String

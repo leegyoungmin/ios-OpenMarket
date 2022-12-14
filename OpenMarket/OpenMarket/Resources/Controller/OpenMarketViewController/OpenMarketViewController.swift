@@ -7,55 +7,66 @@
 import UIKit
 
 class OpenMarketViewController: UIViewController {
-    
     enum Section: Int, CaseIterable {
         case list
         case grid
     }
-    
-    let layoutSegment: UISegmentedControl = {
-        let segment = UISegmentedControl(items: ["LIST", "GRID"])
-        segment.selectedSegmentIndex = .zero
-        return segment
-    }()
-    
-    var dataSource: UICollectionViewDiffableDataSource<Section, Int>?
-    var collectionView: UICollectionView? = nil
-    
+
+    // MARK: - Properties
     var selectedSectionIndex: Int = .zero {
         didSet {
             collectionView?.collectionViewLayout = createLayout()
         }
     }
     
+    var endPoint = OpenMarketAPI.searchList(1, 100)
+    var networkManager = NetworkManager()
+    var productList: ProductList? {
+        didSet {
+            if let products = productList?.products {
+                self.products = products
+            }
+        }
+    }
+    var products: [Product] = [] {
+        didSet {
+            applySnapshot()
+        }
+    }
+    
+    // MARK: - View Properties
+    let layoutSegment: UISegmentedControl = UISegmentedControl(items: ["LIST", "GRID"])
+    
+    var dataSource: UICollectionViewDiffableDataSource<Section, Product>?
+    var collectionView: UICollectionView? = nil
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUpNavigationBar()
-        setSegmentAction()
-        
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        configureDataSource()
-        applySnapshot()
-        
-        setUpConstraints()
         view.backgroundColor = .systemBackground
         
-        let endPoint = OpenMarketAPI.searchList(1, 100)
-        NetworkManager().fetchData(endPoint: endPoint, model: ProductList.self) { result in
-            switch result {
-            case .success(let value):
-                print(value)
-            case .failure(let error):
-                print(error)
+        createCollectionView()
+        setUpNavigationBar()
+        setSegmentAction()
+        setUpConstraints()
+        
+        networkManager.fetchData(endPoint: endPoint, model: ProductList.self) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let productList):
+                    self?.productList = productList
+                case .failure(let error):
+                    print(error)
+                }
             }
         }
     }
 }
 
 // MARK: - UserInteraction
-extension OpenMarketViewController {
+private extension OpenMarketViewController {
     func setSegmentAction() {
+        layoutSegment.selectedSegmentIndex = 0
         layoutSegment.addTarget(self, action: #selector(didChangeSegmentIndex), for: .valueChanged)
     }
     
@@ -64,7 +75,8 @@ extension OpenMarketViewController {
     }
 }
 
-extension OpenMarketViewController {
+// MARK: - Configure UI
+private extension OpenMarketViewController {
     func setUpNavigationBar() {
         let dismissAction = UIAction { _ in
             self.dismiss(animated: true)
@@ -91,7 +103,13 @@ extension OpenMarketViewController {
     }
 }
 
-extension OpenMarketViewController {
+// MARK: - Configure CollectionView
+private extension OpenMarketViewController {
+    func createCollectionView() {
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        configureDataSource()
+    }
+    
     func createLayout() -> UICollectionViewLayout {
         let sectionProvider = { (sectionIndex: Int, layout: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
@@ -136,22 +154,22 @@ extension OpenMarketViewController {
     func configureDataSource() {
         guard let collectionView = collectionView else { return }
         
+        let listCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Product> { (cell, indexPath, itemIdentifier) in
+            var content = cell.defaultContentConfiguration()
+            content.image = UIImage(systemName: "person")
+            content.text = itemIdentifier.name
+            cell.contentConfiguration = content
+        }
+        
         let gridCellRegistration = UICollectionView
-            .CellRegistration<UICollectionViewCell, Int> { (cell, indexPath, itemIdentifier) in
+            .CellRegistration<UICollectionViewCell, Product> { (cell, indexPath, itemIdentifier) in
             var content = UIListContentConfiguration.cell()
             content.image = UIImage(systemName: "person")
             content.textProperties.alignment = .center
             cell.contentConfiguration = content
         }
         
-        let listCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Int> { (cell, indexPath, itemIdentifier) in
-            var content = cell.defaultContentConfiguration()
-            content.image = UIImage(systemName: "person")
-            content.text = itemIdentifier.description
-            cell.contentConfiguration = content
-        }
-        
-        dataSource = UICollectionViewDiffableDataSource<Section, Int>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, Product>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             if let section = Section(rawValue: self.selectedSectionIndex) {
                 switch section {
                 case .grid:
@@ -170,8 +188,8 @@ extension OpenMarketViewController {
             return
         }
         
-        var snapshot = NSDiffableDataSourceSectionSnapshot<Int>()
-        snapshot.append(Array(1...1000))
+        var snapshot = NSDiffableDataSourceSectionSnapshot<Product>()
+        snapshot.append(products)
         dataSource?.apply(snapshot, to: section, animatingDifferences: true)
     }
 }
