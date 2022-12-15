@@ -25,11 +25,12 @@ class MainViewController: UIViewController {
 // MARK: - TableViewDataSource
 private extension MainViewController {
     func setUpTableViewDataSource() {
-        APITableView.register(ListTableCell.self, forCellReuseIdentifier: ListTableCell.identifier)
+        APITableView.register(APIListTableViewCell.self, forCellReuseIdentifier: APIListTableViewCell.identifier)
         
         dataSource = UITableViewDiffableDataSource<Int, AnyTargetAPI>(tableView: APITableView) { tableView, indexPath, itemIdentifier in
-            let cell = tableView.dequeueReusableCell(withIdentifier: ListTableCell.identifier, for: indexPath) as? ListTableCell
-            cell?.updateTarget(targetAPI: self.apiList[indexPath.row])
+            let cell = tableView.dequeueReusableCell(withIdentifier: APIListTableViewCell.identifier, for: indexPath) as? APIListTableViewCell
+            let data = self.apiList[indexPath.row]
+            cell?.configure(model: data)
             return cell
         }
         

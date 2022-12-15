@@ -4,7 +4,7 @@
 //
 //  Copyright (c) 2022 Minii All rights reserved.
         
-import Foundation
+import UIKit
 
 struct ProductList: Codable {
     let pageNumber: Int
@@ -46,6 +46,8 @@ struct Product: Codable, Hashable {
         case createdDate = "created_at"
         case issuedDate = "issued_at"
     }
+    
+    var image: UIImage?
 }
 
 enum Currency: String, Codable {

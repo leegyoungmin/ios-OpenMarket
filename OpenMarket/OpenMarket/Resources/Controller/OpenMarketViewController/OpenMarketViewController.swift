@@ -11,11 +11,12 @@ class OpenMarketViewController: UIViewController {
         case list
         case grid
     }
-
+    
     // MARK: - Properties
     var selectedSectionIndex: Int = .zero {
         didSet {
             collectionView?.collectionViewLayout = createLayout()
+            collectionView?.reloadData()
         }
     }
     
@@ -39,7 +40,7 @@ class OpenMarketViewController: UIViewController {
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Product>?
     var collectionView: UICollectionView? = nil
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -137,7 +138,6 @@ private extension OpenMarketViewController {
                 )
                 
                 section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .none
             case .list:
                 let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
                 section = NSCollectionLayoutSection.list(
@@ -154,19 +154,14 @@ private extension OpenMarketViewController {
     func configureDataSource() {
         guard let collectionView = collectionView else { return }
         
-        let listCellRegistration = UICollectionView
-            .CellRegistration<UICollectionViewCell, Product> { (cell, indexPath, itemIdentifier) in
-            var content = UIListContentConfiguration.cell()
-            content.text = itemIdentifier.name
-            cell.contentConfiguration = content
+        let listCellRegistration = UICollectionView.CellRegistration<ListItemCell, Product> { (cell, indexPath, itemIdentifier) in
+                cell.configure(model: itemIdentifier)
+            }
+        
+        let gridCellRegistration = UICollectionView.CellRegistration<GridItemCell, Product> { (cell, indexPath, itemIdentifier) in
+            cell.configure(model: itemIdentifier)
         }
         
-        let gridCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Product> { (cell, indexPath, itemIdentifier) in
-            var content = cell.defaultContentConfiguration()
-            content.image = UIImage(systemName: "person")
-            content.text = itemIdentifier.name
-            cell.contentConfiguration = content
-        }
         
         dataSource = UICollectionViewDiffableDataSource<Section, Product>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             if let section = Section(rawValue: self.selectedSectionIndex) {
@@ -192,3 +187,4 @@ private extension OpenMarketViewController {
         dataSource?.apply(snapshot, to: section, animatingDifferences: true)
     }
 }
+

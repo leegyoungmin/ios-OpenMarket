@@ -1,13 +1,14 @@
 //
-//  APIListCell.swift
+//  APIListCollectionViewCell.swift
 //  OpenMarket
 //
 //  Copyright (c) 2022 Minii All rights reserved.
+        
 
 import UIKit
 
-class ListTableCell: UITableViewCell {
-    static let identifier = String(describing: ListTableCell.self)
+class APIListTableViewCell: UITableViewCell {
+    static let identifier = String(describing: APIListTableViewCell.self)
 
     private var targetAPI: APIStore?
     
@@ -23,7 +24,7 @@ class ListTableCell: UITableViewCell {
         backgroundConfiguration = backgroundConfig
     }
     
-    func updateTarget(targetAPI: APIStore) {
-        self.targetAPI = targetAPI
+    func configure(model: AnyTargetAPI) {
+        targetAPI = model
     }
 }
